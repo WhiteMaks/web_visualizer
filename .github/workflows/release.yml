@@ -1,0 +1,33 @@
+name: Web visualizer build release
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    name: Build Web visualizer
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Preparing git branch
+        uses: actions/checkout@v3
+
+      - name: Install Java and Maven
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'oracle'
+          cache: maven
+
+      - name: Build
+        run: mvn clean package
+
+      - name: Login into docker
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_ACCESS_TOKEN}}
+
+      - name: Build docker image
+        run: docker build -t ${{secrets.DOCKER_USERNAME}}/web_game:gateway_${{github.ref_name}} .
+
+      - name: Push docker tag
+        run: docker push ${{secrets.DOCKER_USERNAME}}/web_visualizer
