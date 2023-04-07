@@ -30,4 +30,4 @@ jobs:
         run: docker build -t ${{secrets.DOCKER_USERNAME}}/web_game:gateway_${{github.ref_name}} .
 
       - name: Push docker tag
-        run: docker push ${{secrets.DOCKER_USERNAME}}/web_visualizer
+        run: docker push ${{secrets.DOCKER_USERNAME}}/web_visualizer:latest
