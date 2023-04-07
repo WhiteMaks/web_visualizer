@@ -27,7 +27,7 @@ jobs:
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_ACCESS_TOKEN}}
 
       - name: Build docker image
-        run: docker build -t ${{secrets.DOCKER_USERNAME}}/web_game:gateway_${{github.ref_name}} .
+        run: docker build -t ${{secrets.DOCKER_USERNAME}}/web_visualizer:latest .
 
       - name: Push docker tag
         run: docker push ${{secrets.DOCKER_USERNAME}}/web_visualizer:latest
